@@ -109,7 +109,7 @@ func doQuery(profile common.Profile, objective common.Intent) float64 {
 			return math.Round(val*round) / round
 		}
 	}
-	klog.Warningf("Sth went wrong while trying get information from Prometheus - will return -1.0. Status code was: %v.", response.StatusCode)
+	klog.Warningf("Sth went wrong while trying get information from Prometheus - will return -1.0. Status code was: %v from ip: %s.", response.StatusCode, profile.Address+"?query="+url.QueryEscape(query))
 	return -1.0
 }
 

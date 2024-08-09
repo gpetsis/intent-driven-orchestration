@@ -34,14 +34,48 @@ build-plugin-cpu:
 
 build-plugins: build-plugin-scaleout build-plugin-rmpod build-plugin-rdt build-plugin-cpu
 
-controller-images:
-	docker build -t planner:${DOCKER_IMAGE_VERSION} . --no-cache --pull
+# controller-images:
+# 	docker build -t planner:${DOCKER_IMAGE_VERSION} . --no-cache --pull
 
-plugin-images:
-	docker build -t scaleout:${DOCKER_IMAGE_VERSION} -f plugins/scale_out/Dockerfile . --no-cache --pull
-	docker build -t rmpod:${DOCKER_IMAGE_VERSION} -f plugins/rm_pod/Dockerfile . --no-cache --pull
-	docker build -t rdt:${DOCKER_IMAGE_VERSION} -f plugins/rdt/Dockerfile . --no-cache --pull
-	docker build -t cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
+giannispetsis-controller-images:
+	docker build -t giannispetsis/planner:${DOCKER_IMAGE_VERSION} . --no-cache --pull
+
+	docker push giannispetsis/planner:${DOCKER_IMAGE_VERSION}
+
+# plugin-images:
+# 	docker build -t scaleout:${DOCKER_IMAGE_VERSION} -f plugins/scale_out/Dockerfile . --no-cache --pull
+# 	docker build -t rmpod:${DOCKER_IMAGE_VERSION} -f plugins/rm_pod/Dockerfile . --no-cache --pull
+# 	docker build -t rdt:${DOCKER_IMAGE_VERSION} -f plugins/rdt/Dockerfile . --no-cache --pull
+# 	docker build -t cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
+
+giannispetsis-plugin-images:
+	# docker build -t giannispetsis/scale_out:${DOCKER_IMAGE_VERSION} -f plugins/scale_out/Dockerfile . --no-cache --pull
+	# docker build -t giannispetsis/rmpod:${DOCKER_IMAGE_VERSION} -f plugins/rm_pod/Dockerfile . --no-cache --pull
+	# docker build -t giannispetsis/rdt:${DOCKER_IMAGE_VERSION} -f plugins/rdt/Dockerfile . --no-cache --pull
+	# docker build -t giannispetsis/cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
+
+	docker push giannispetsis/scale_out:${DOCKER_IMAGE_VERSION}
+	docker push giannispetsis/rmpod:${DOCKER_IMAGE_VERSION}
+	docker push giannispetsis/rdt:${DOCKER_IMAGE_VERSION}
+	docker push giannispetsis/cpuscale:${DOCKER_IMAGE_VERSION}
+
+giannispetsis-apply-plugins:
+	kubectl apply -n ido -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
+	kubectl apply -n ido -f plugins/rdt/rdt-actuator-plugin.yaml
+	kubectl apply -n ido -f plugins/rm_pod/rmpod-actuator-plugin.yaml
+	kubectl apply -n ido -f plugins/scale_out/scaleout-actuator-plugin.yaml
+	
+giannispetsis-delete-plugins:
+	kubectl delete -n ido -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
+	kubectl delete -n ido -f plugins/rdt/rdt-actuator-plugin.yaml
+	kubectl delete -n ido -f plugins/rm_pod/rmpod-actuator-plugin.yaml
+	kubectl delete -n ido -f plugins/scale_out/scaleout-actuator-plugin.yaml
+
+giannispetsis-delete-planner:
+	kubectl delete -n ido -f artefacts/deploy/manifest.yaml
+
+
+giannispetsis-delete-all: giannispetsis-delete-plugins giannispetsis-delete-planner
 
 all-images: controller-images plugin-images
 

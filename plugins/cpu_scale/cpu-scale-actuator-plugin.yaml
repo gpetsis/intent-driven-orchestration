@@ -30,7 +30,8 @@ spec:
   serviceAccountName: planner-service-account
   containers:
   - name: cpu-scale-actuator
-    image: 127.0.0.1:5000/cpuscale:0.2.0
+    # image: 127.0.0.1:5000/cpuscale:0.2.0
+    image: giannispetsis/cpuscale:0.2.0
     imagePullPolicy: Always
     args: [ "-config", "/config/defaults.json", "-v", "2" ]
     ports:

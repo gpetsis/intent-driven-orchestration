@@ -26,7 +26,8 @@ spec:
   serviceAccountName: planner-service-account
   containers:
   - name: rdt-actuator
-    image: 127.0.0.1:5000/rdt:0.2.0
+    # image: 127.0.0.1:5000/rdt:0.2.0
+    image: giannispetsis/rdt:0.2.0
     args: [ "-config", "/config/defaults.json" ]
     ports:
     - containerPort: 33334

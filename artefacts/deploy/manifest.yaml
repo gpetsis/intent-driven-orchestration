@@ -56,19 +56,19 @@ data:
     {
       "default/p50latency": {
         "query": "histogram_quantile(0.5,sum(irate(response_latency_ms_bucket{namespace=\"%s\",%s=\"%s\",direction=\"inbound\"}[30s]))by(le,%s))",
-        "endpoint": "http://prometheus.linkerd-viz:9090/api/v1/query"
+        "endpoint": "http://prometheus.linkerd-viz.svc.cluster.local:9090/api/v1/query"
       },
       "default/p95latency": {
         "query": "histogram_quantile(0.95,sum(irate(response_latency_ms_bucket{namespace=\"%s\",%s=\"%s\",direction=\"inbound\"}[30s]))by(le,%s))",
-        "endpoint": "http://prometheus.linkerd-viz:9090/api/v1/query"
+        "endpoint": "http://prometheus.linkerd-viz.svc.cluster.local:9090/api/v1/query"
       },
       "default/p99latency": {
         "query": "histogram_quantile(0.99,sum(irate(response_latency_ms_bucket{namespace=\"%s\",%s=\"%s\",direction=\"inbound\"}[30s]))by(le,%s))",
-        "endpoint": "http://prometheus.linkerd-viz:9090/api/v1/query"
+        "endpoint": "http://prometheus.linkerd-viz.svc.cluster.local:9090/api/v1/query"
       },
       "default/throughput": {
         "query": "sum(irate(request_total{namespace=\"%s\",%s=\"%s\",direction=\"inbound\"}[30s]))by(le,%s)",
-        "endpoint": "http://prometheus.linkerd-viz:9090/api/v1/query"
+        "endpoint": "http://prometheus.linkerd-viz.svc.cluster.local:9090/api/v1/query"
       },
       "default/availability": {
         "query": "",
@@ -149,9 +149,9 @@ spec:
           cpu: "500m"
   volumes:
     - name: mongo-tmp
-      emptyDir:
+      emptyDir: {}
     - name: data
-      emptyDir:
+      emptyDir: {}
   tolerations:
     - key: node-role.kubernetes.io/master
       operator: Exists
@@ -199,7 +199,8 @@ spec:
   serviceAccountName: planner-service-account
   containers:
     - name: planner
-      image: 127.0.0.1:5000/planner:0.2.0
+      # image: 127.0.0.1:5000/planner:0.2.0
+      image: giannispetsis/planner:0.2.0
       ports:
         - containerPort: 33333
       imagePullPolicy: Always
