@@ -49,10 +49,10 @@ giannispetsis-controller-images:
 # 	docker build -t cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
 
 giannispetsis-plugin-images:
-	# docker build -t giannispetsis/scale_out:${DOCKER_IMAGE_VERSION} -f plugins/scale_out/Dockerfile . --no-cache --pull
-	# docker build -t giannispetsis/rmpod:${DOCKER_IMAGE_VERSION} -f plugins/rm_pod/Dockerfile . --no-cache --pull
-	# docker build -t giannispetsis/rdt:${DOCKER_IMAGE_VERSION} -f plugins/rdt/Dockerfile . --no-cache --pull
-	# docker build -t giannispetsis/cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
+	docker build -t giannispetsis/scale_out:${DOCKER_IMAGE_VERSION} -f plugins/scale_out/Dockerfile . --no-cache --pull
+	docker build -t giannispetsis/rmpod:${DOCKER_IMAGE_VERSION} -f plugins/rm_pod/Dockerfile . --no-cache --pull
+	docker build -t giannispetsis/rdt:${DOCKER_IMAGE_VERSION} -f plugins/rdt/Dockerfile . --no-cache --pull
+	docker build -t giannispetsis/cpuscale:${DOCKER_IMAGE_VERSION} -f plugins/cpu_scale/Dockerfile . --no-cache --pull
 
 	docker push giannispetsis/scale_out:${DOCKER_IMAGE_VERSION}
 	docker push giannispetsis/rmpod:${DOCKER_IMAGE_VERSION}
@@ -60,16 +60,16 @@ giannispetsis-plugin-images:
 	docker push giannispetsis/cpuscale:${DOCKER_IMAGE_VERSION}
 
 giannispetsis-apply-plugins:
-	kubectl apply -n ido -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
-	kubectl apply -n ido -f plugins/rdt/rdt-actuator-plugin.yaml
-	kubectl apply -n ido -f plugins/rm_pod/rmpod-actuator-plugin.yaml
-	kubectl apply -n ido -f plugins/scale_out/scaleout-actuator-plugin.yaml
+	kubectl apply -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
+	kubectl apply -f plugins/rdt/rdt-actuator-plugin.yaml
+	kubectl apply -f plugins/rm_pod/rmpod-actuator-plugin.yaml
+	kubectl apply -f plugins/scale_out/scaleout-actuator-plugin.yaml
 	
 giannispetsis-delete-plugins:
-	kubectl delete -n ido -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
-	kubectl delete -n ido -f plugins/rdt/rdt-actuator-plugin.yaml
-	kubectl delete -n ido -f plugins/rm_pod/rmpod-actuator-plugin.yaml
-	kubectl delete -n ido -f plugins/scale_out/scaleout-actuator-plugin.yaml
+	kubectl delete -f plugins/cpu_scale/cpu-scale-actuator-plugin.yaml
+	kubectl delete -f plugins/rdt/rdt-actuator-plugin.yaml
+	kubectl delete -f plugins/rm_pod/rmpod-actuator-plugin.yaml
+	kubectl delete -f plugins/scale_out/scaleout-actuator-plugin.yaml
 
 giannispetsis-delete-planner:
 	kubectl delete -n ido -f artefacts/deploy/manifest.yaml

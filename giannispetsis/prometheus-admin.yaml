@@ -1,0 +1,24 @@
+apiVersion: policy.linkerd.io/v1beta3
+kind: Server
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"policy.linkerd.io/v1beta3","kind":"Server","metadata":{"annotations":{"linkerd.io/created-by":"linkerd/helm edge-24.8.2"},"labels":{"linkerd.io/extension":"viz"},"name":"prometheus-admin","namespace":"linkerd-viz"},"spec":{"podSelector":{"matchLabels":{"component":"prometheus","linkerd.io/extension":"viz","namespace":"linkerd-viz"}},"port":"admin-http","proxyProtocol":"HTTP/1"}}
+    linkerd.io/created-by: linkerd/helm edge-24.8.2
+  creationTimestamp: "2024-08-09T10:53:33Z"
+  generation: 1
+  labels:
+    linkerd.io/extension: viz
+  name: prometheus-admin
+  namespace: linkerd-viz
+  resourceVersion: "7514394"
+  uid: 68fb5193-c7dd-458d-bdc6-c1da70a4b29b
+spec:
+  accessPolicy: deny
+  podSelector:
+    matchLabels:
+      component: prometheus
+      linkerd.io/extension: viz
+      namespace: linkerd-viz
+  port: admin-http
+  proxyProtocol: HTTP/1

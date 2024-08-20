@@ -27,7 +27,7 @@ func getHostTelemetry(endpoint string, query string, hosts []string, hostLabel s
 	}
 	response, err := Client.Do(request)
 	if err != nil {
-		klog.Errorf("Could not perform request.")
+		klog.Errorf("Could not perform request. on ip %s", endpoint+"?query="+url.QueryEscape(queryString))
 		return ret
 	}
 	if response.StatusCode == 200 {

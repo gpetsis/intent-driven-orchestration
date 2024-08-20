@@ -103,11 +103,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: planner-role-binding
-  namespace: ido
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: planner-service-account
-    namespace: ido
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: planner-role
